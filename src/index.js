@@ -53,6 +53,8 @@ async function playRaceEngine(character1, character2) {
         //teste de habilidade
         let totalTestSkill1 = 0;
         let totalTestSkill2 = 0;
+        let powerResult1 = 0;
+        let powerResult2 = 0;
 
         if (block === "Reta") {
           totalTestSkill1 = diceResult1 + character1.velocidade;
@@ -63,21 +65,43 @@ async function playRaceEngine(character1, character2) {
         if (block === "Curva") {
           totalTestSkill1 = diceResult1 + character1.manobrabilidade;
           totalTestSkill2 = diceResult2 + character2.manobrabilidade;
-        await mensagemResultado(character1.nome, "manobrabilidade", diceResult1, character1.manobrabilidade);
+          await mensagemResultado(character1.nome, "manobrabilidade", diceResult1, character1.manobrabilidade);
           await mensagemResultado(character2.nome, "manobrabilidade", diceResult2, character2.manobrabilidade);
 
         };
         if (block === "Confronto") {
-           let powerResult1 = diceResult1 + character1.poder;
-           let powerResult2 = diceResult2 + character2.poder;
+           powerResult1 = diceResult1 + character1.poder;
+           powerResult2 = diceResult2 + character2.poder;
+
+           if (powerResult1 > powerResult2) {
+             character1.pontos++;
+             console.log(`🏆 ${character1.nome} venceu a rodada! \n`);
+           } else if (powerResult2 > powerResult1) {
+              character2.pontos++;
+              console.log(`🏆 ${character2.nome} venceu a rodada! \n`);
+             };
+           await mensagemResultado(character1.nome, "Poder", diceResult1, character1.poder);
+           await mensagemResultado(character2.nome, "Poder", diceResult2, character2.poder);
 
         };
-    }
-   
+
+        //verificar vencedor
+
+        if (totalTestSkill1 > totalTestSkill2) {
+            character1.pontos++;
+            console.log(`🏆 ${character1.nome} venceu a rodada! \n`);
+        } else if (totalTestSkill2 > totalTestSkill1) {
+            character2.pontos++;
+            console.log(`🏆 ${character2.nome} venceu a rodada! \n`);
+        } else {
+            console.log("🤝 Empate! \n");
+        };
+
+       console.log("-------------------------------------------------------------");
+    };
 };
 
 (async function main() {
     console.log(`🏁🚨Corrida entre ${player1.nome} e ${player2.nome} começando... \n`);
     await playRaceEngine(player1, player2);
 })();
-
