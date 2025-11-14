@@ -93,12 +93,21 @@ async function playRaceEngine(character1, character2) {
         } else if (totalTestSkill2 > totalTestSkill1) {
             character2.pontos++;
             console.log(`🏆 ${character2.nome} venceu a rodada! \n`);
-        } else {
-            console.log("🤝 Empate! \n");
-        };
+          } else {
+             console.log("🤝 Empate! \n");
+            };
 
        console.log("-------------------------------------------------------------");
     };
+    //Verifica o ganhador da partida, tem que corrigir uns detalhes
+
+    if (character1.pontos===character2.pontos){
+        console.log("🤝 A Partida Empatou! \n");
+    } else if (character1.pontos > character2.pontos){
+        console.log(`🏆 ${character1.nome} venceu a Partida \n`);
+      } else {
+         console.log(`🏆 ${character2.nome} venceu a Partida! \n`);
+        };
 };
 
 (async function main() {
